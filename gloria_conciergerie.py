@@ -92,14 +92,14 @@ def received_phone(update: Update, context: CallbackContext) -> int:
     )
 
     update.message.reply_media_group(
-        [InputMediaPhoto(pathlib.Path("instructions/1.jpg").read_bytes()),
-         InputMediaPhoto(pathlib.Path("instructions/2.jpg").read_bytes()),
-         InputMediaPhoto(pathlib.Path("instructions/3.jpg").read_bytes()),
-         InputMediaPhoto(pathlib.Path("instructions/4.jpg").read_bytes()),
-         InputMediaPhoto(pathlib.Path("instructions/5.jpg").read_bytes()),
-         InputMediaPhoto(pathlib.Path("instructions/6.jpg").read_bytes()),
-         InputMediaPhoto(pathlib.Path("instructions/7.jpg").read_bytes()),
-         InputMediaPhoto(pathlib.Path("instructions/8.jpg").read_bytes())])
+        [InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/1.jpg").read_bytes()),
+         InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/2.jpg").read_bytes()),
+         InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/3.jpg").read_bytes()),
+         InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/4.jpg").read_bytes()),
+         InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/5.jpg").read_bytes()),
+         InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/6.jpg").read_bytes()),
+         InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/7.jpg").read_bytes()),
+         InputMediaPhoto(pathlib.Path(config["workdir"] + "/instructions/8.jpg").read_bytes())])
     context.user_data["phone"] = update.message.contact.phone_number
     context.user_data["intercoms"] = domlist
     return GOT_PHONE
@@ -142,7 +142,7 @@ def main() -> None:
         sys.exit(1)
 
     config = json.loads(config)
-    persistence = PicklePersistence(filename='conversation_archive')
+    persistence = PicklePersistence(filename=config["workdir"] + "/conversation_archive")
     updater = Updater(config["api-token"], persistence=persistence)
 
     dispatcher = updater.dispatcher
